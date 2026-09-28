@@ -328,16 +328,18 @@ body::after{
   }
 }
 
-/* === HERO BOOSTED + FLOATING SOCIAL RAIL + FLOW FIX === */
+/* === HERO BOOSTED + FLOATING SOCIAL RAIL + FLOW FIX V2 === */
 
-/* Remove the old overlap between CTA and footer: sections keep their own layout space. */
+/* === HERO BOOSTED + FLOATING SOCIAL RAIL + FLOW FIX V2 === */
+
+/* Keep CTA/footer in normal document flow. */
 .cta-wrap{
   margin-bottom:0!important;
   padding-bottom:72px;
 }
-.footer{
-  padding-top:78px!important;
-}
+.footer{padding-top:78px!important}
+
+/* Disable whole-section transforms; animate inner content only. */
 .section-shell,
 .section-shell.section-active,
 .section-shell:not(.section-active){
@@ -346,21 +348,21 @@ body::after{
   filter:none!important;
 }
 
-/* Hero now has copy + the boosted creature presentation in the same hero-content container. */
 .hero-content{
   display:grid!important;
-  grid-template-columns:minmax(0,1.08fr) minmax(380px,.92fr)!important;
+  grid-template-columns:minmax(0,1.06fr) minmax(390px,.94fr)!important;
   align-items:center!important;
-  gap:54px!important;
+  gap:48px!important;
 }
 .hero-copy{min-width:0}
+
 .hero-boosted{
   justify-self:center;
   width:min(100%,470px);
-  padding:22px 22px 18px;
+  padding:22px 22px 20px;
   border:1px solid rgba(255,255,255,.11);
   border-radius:22px;
-  background:linear-gradient(145deg,rgba(8,16,31,.46),rgba(9,17,32,.24));
+  background:linear-gradient(145deg,rgba(8,16,31,.48),rgba(9,17,32,.27));
   box-shadow:0 28px 70px rgba(2,7,18,.34),inset 0 1px rgba(255,255,255,.06);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
@@ -370,7 +372,7 @@ body::after{
   align-items:center;
   justify-content:space-between;
   gap:18px;
-  margin-bottom:10px;
+  margin-bottom:16px;
 }
 .hero-boosted-head small{
   color:rgba(255,255,255,.46);
@@ -381,78 +383,91 @@ body::after{
 }
 .hero-boosted-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:end;
+  grid-template-columns:repeat(2,minmax(150px,1fr));
+  align-items:start;
   justify-items:center;
-  gap:10px;
+  gap:22px;
 }
 .hero-boost-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   min-width:0;
   text-align:center;
 }
-.boost-pillar{
+
+/*
+ * Asset geometry is intentional:
+ * pedestal source = 104x85;
+ * creature sources = 64x64.
+ * We preserve the full pedestal and anchor sprites to the visual center of the stone tile,
+ * not to the decorative green side element.
+ */
+.boost-pillar-stage{
   position:relative;
-  width:190px;
-  height:150px;
+  width:156px;
+  height:128px;
   margin-inline:auto;
+  overflow:visible;
 }
-.pedestal-art{
+.boost-pillar-art{
   position:absolute;
   left:50%;
   bottom:0;
-  width:184px;
+  width:140px;
   height:auto;
   transform:translateX(-50%);
   image-rendering:pixelated;
-  filter:drop-shadow(0 15px 18px rgba(0,0,0,.35));
+  object-fit:contain;
+  filter:drop-shadow(0 12px 16px rgba(0,0,0,.34));
 }
-.boost-monster{
+.boost-sprite{
   position:absolute;
   z-index:2;
-  left:50%;
-  top:15px;
-  width:66px;
-  height:66px;
+  left:53.5%;
+  width:64px;
+  height:64px;
   object-fit:contain;
-  transform:translateX(-50%);
   image-rendering:pixelated;
-  filter:drop-shadow(0 8px 10px rgba(0,0,0,.42));
+  transform:translateX(-50%);
+  transform-origin:center bottom;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.46));
   transition:transform .28s cubic-bezier(.22,.84,.24,1),filter .28s;
 }
-.hero-boost-card:hover .boost-monster{
-  transform:translateX(-50%) translateY(-5px) scale(1.1);
-  filter:drop-shadow(0 12px 14px rgba(0,0,0,.5));
+.boost-sprite--creature{top:11px}
+.boost-sprite--monster{top:7px}
+.hero-boost-card:hover .boost-sprite{
+  transform:translateX(-50%) translateY(-4px) scale(1.06);
+  filter:drop-shadow(0 12px 14px rgba(0,0,0,.52));
 }
-.boost-pillar-label{
-  position:absolute;
-  z-index:3;
-  left:50%;
-  bottom:25px;
-  width:124px;
-  transform:translateX(-50%);
+.boost-type{
+  margin-top:2px;
   color:#f5d78d;
-  font-size:11px;
+  font-size:12px;
   line-height:1;
   font-weight:900;
   letter-spacing:.12em;
   text-transform:uppercase;
-  text-shadow:0 1px 2px #000,0 0 8px rgba(245,215,141,.22);
+  text-shadow:0 1px 2px #000,0 0 8px rgba(245,215,141,.18);
 }
 .boost-real-name{
-  display:inline-block;
-  margin-top:2px;
-  padding:4px 9px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:62px;
+  margin-top:10px;
+  padding:5px 10px;
   border-radius:999px;
-  color:rgba(236,244,255,.72);
+  color:rgba(236,244,255,.75);
   background:rgba(255,255,255,.055);
   border:1px solid rgba(255,255,255,.08);
   font-size:10px;
-  font-weight:800;
+  font-weight:900;
   letter-spacing:.1em;
   text-transform:uppercase;
 }
 
-/* Community is now a compact floating rail instead of a large content section. */
+/* Floating Community rail. */
 .social-rail{
   position:fixed;
   z-index:80;
@@ -461,43 +476,49 @@ body::after{
   transform:translateY(-50%);
   display:flex;
   flex-direction:column;
-  gap:10px;
-  padding:9px;
+  gap:12px;
+  padding:10px;
   border:1px solid rgba(255,255,255,.12);
-  border-radius:18px;
-  background:rgba(7,14,27,.54);
+  border-radius:20px;
+  background:rgba(7,14,27,.56);
   box-shadow:0 20px 50px rgba(1,6,16,.35),inset 0 1px rgba(255,255,255,.06);
   backdrop-filter:blur(16px) saturate(1.15);
   -webkit-backdrop-filter:blur(16px) saturate(1.15);
 }
 .social-rail-link{
-  width:50px;
-  height:50px;
-  border-radius:14px;
+  width:58px;
+  height:58px;
+  border-radius:16px;
   display:grid;
   place-items:center;
-  color:#eaf9ff;
+  color:#f2f7ff;
   background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.10);
   transition:transform .24s cubic-bezier(.22,.84,.24,1),background .24s,border-color .24s,box-shadow .24s;
 }
 .social-rail-link:hover,
 .social-rail-link:focus-visible{
-  transform:translateX(-5px) scale(1.06);
+  transform:translateX(-5px) scale(1.05);
   background:rgba(80,205,255,.12);
   border-color:rgba(125,226,255,.33);
   box-shadow:0 12px 28px rgba(0,0,0,.28);
   outline:none;
 }
-.social-rail-link svg{
-  width:25px;
-  height:25px;
+.social-rail-discord svg{
+  width:28px;
+  height:28px;
+  display:block;
   fill:currentColor;
+  stroke:none;
+}
+.social-rail-instagram svg{
+  width:27px;
+  height:27px;
+  display:block;
+  fill:none;
   stroke:currentColor;
   stroke-width:1.7;
 }
-.social-rail-link svg rect,
-.social-rail-link svg circle{fill:none}
 .social-rail-wiki img{
   width:40px;
   height:40px;
@@ -506,7 +527,7 @@ body::after{
   filter:drop-shadow(0 5px 8px rgba(0,0,0,.3));
 }
 
-/* Inner content animates; entire sections no longer transform over each other. */
+/* Inner content motion, without moving entire sections over one another. */
 .motion-item{
   opacity:0;
   transform:translate3d(0,30px,0) scale(.985);
@@ -528,13 +549,14 @@ body::after{
 
 @media(max-width:1100px){
   .hero-content{
-    grid-template-columns:minmax(0,1fr) minmax(340px,.82fr)!important;
+    grid-template-columns:minmax(0,1fr) minmax(350px,.86fr)!important;
     gap:30px!important;
   }
-  .boost-pillar{width:166px;height:138px}
-  .pedestal-art{width:166px}
-  .boost-monster{width:59px;height:59px;top:18px}
-  .boost-pillar-label{bottom:23px;width:112px;font-size:10px}
+  .boost-pillar-stage{width:146px;height:120px}
+  .boost-pillar-art{width:132px}
+  .boost-sprite{width:60px;height:60px;left:53.5%}
+  .boost-sprite--creature{top:10px}
+  .boost-sprite--monster{top:6px}
 }
 @media(max-width:960px){
   .hero-content{
@@ -550,13 +572,16 @@ body::after{
 @media(max-width:680px){
   .hero-boosted{
     width:100%;
-    padding:18px 10px 14px;
+    padding:18px 12px 16px;
   }
-  .hero-boosted-grid{gap:0}
-  .boost-pillar{width:145px;height:124px}
-  .pedestal-art{width:145px}
-  .boost-monster{width:52px;height:52px;top:17px}
-  .boost-pillar-label{bottom:20px;width:98px;font-size:9px}
+  .hero-boosted-grid{gap:6px}
+  .boost-pillar-stage{width:132px;height:112px}
+  .boost-pillar-art{width:122px}
+  .boost-sprite{width:56px;height:56px}
+  .boost-sprite--creature{top:12px}
+  .boost-sprite--monster{top:8px}
+  .boost-type{font-size:10px}
+  .boost-real-name{margin-top:8px}
   .social-rail{
     top:auto;
     right:50%;
@@ -572,5 +597,5 @@ body::after{
 }
 @media(prefers-reduced-motion:reduce){
   .motion-item{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
-  .hero-boost-card:hover .boost-monster{transform:translateX(-50%)}
+  .hero-boost-card:hover .boost-sprite{transform:translateX(-50%)}
 }
