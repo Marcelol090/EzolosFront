@@ -13,32 +13,27 @@
   <header class="hero" id="top">
     <div class="nav-wrap">
       <div class="container nav">
-        <a class="brand" href="#top" aria-label="Ezolos home">
-          <img src="https://www.ezolos.com/layouts/global/images/logo/ezolos_logo.webp" alt="Ezolos logo" />
-          <strong>Ezolos</strong>
-        </a>
+        <nav class="desktop-main-nav" aria-label="Main navigation">
+          <div class="nav-menu-group nav-menu-left">
+            <a href="#news">News</a>
+            <a href="#rankings">Rankings</a>
+            <a href="#store">Shop</a>
+          </div>
 
-        <div class="header-status" aria-label="Live server information">
-          <div class="header-stat">
-            <span class="header-stat-icon" aria-hidden="true">♟</span>
-            <span><strong>0</strong><small>Players online</small></span>
+          <a class="brand brand-center" href="#top" aria-label="Ezolos home">
+            <img src="https://www.ezolos.com/layouts/global/images/logo/ezolos_logo.webp" alt="Ezolos logo" />
+            <strong>Ezolos</strong>
+          </a>
+
+          <div class="nav-menu-group nav-menu-right">
+            <a href="#community">Community</a>
+            <a href="#wiki">Wiki</a>
+            <a href="#account">Account</a>
           </div>
-          <div class="header-stat">
-            <span class="header-stat-icon" aria-hidden="true">◎</span>
-            <span><strong>1</strong><small>World</small></span>
-          </div>
-          <div class="header-stat">
-            <span class="header-stat-icon" aria-hidden="true">◷</span>
-            <span><strong>5h 54m</strong><small>Server save</small></span>
-          </div>
-          <div class="header-stat header-stat-live">
-            <span class="status-dot" aria-hidden="true"></span>
-            <span><strong>Offline now</strong><small>Live status</small></span>
-          </div>
-        </div>
+        </nav>
 
         <div class="nav-actions">
-          <a class="btn btn-primary" href="#download">Play now</a>
+          <a class="btn btn-primary nav-play" href="#download">Play now</a>
           <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteMenu" aria-label="Open menu">
             <span></span><span></span><span></span>
           </button>
@@ -91,6 +86,27 @@
       </div>
 
       <aside class="hero-boosted" aria-label="Today's boosted creatures">
+        <div class="hero-server-strip" aria-label="Live server information">
+          <div class="header-status">
+            <div class="header-stat">
+              <span class="header-stat-icon" aria-hidden="true">♟</span>
+              <span><strong>0</strong><small>Players online</small></span>
+            </div>
+            <div class="header-stat">
+              <span class="header-stat-icon" aria-hidden="true">◎</span>
+              <span><strong>1</strong><small>World</small></span>
+            </div>
+            <div class="header-stat">
+              <span class="header-stat-icon" aria-hidden="true">◷</span>
+              <span><strong>5h 54m</strong><small>Server save</small></span>
+            </div>
+            <div class="header-stat header-stat-live">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span><strong>Offline now</strong><small>Live status</small></span>
+            </div>
+          </div>
+        </div>
+
         <div class="hero-boosted-head">
           <span class="eyebrow">Today's boosted</span>
           <small>Daily rotation</small>
