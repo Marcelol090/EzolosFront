@@ -29,3 +29,8 @@ Then open `http://localhost:8080`.
 - `app.js` — navigation, scroll reveals and store carousel
 
 The current concept references public Ezolos image URLs so the repository stays lightweight.
+
+
+## Deployment
+
+Production target: `https://ezolosfront1-ludozh1k4-marcelol090s-projects.vercel.app`
