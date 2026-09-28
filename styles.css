@@ -327,3 +327,250 @@ body::after{
     transition:none!important;
   }
 }
+
+/* === HERO BOOSTED + FLOATING SOCIAL RAIL + FLOW FIX === */
+
+/* Remove the old overlap between CTA and footer: sections keep their own layout space. */
+.cta-wrap{
+  margin-bottom:0!important;
+  padding-bottom:72px;
+}
+.footer{
+  padding-top:78px!important;
+}
+.section-shell,
+.section-shell.section-active,
+.section-shell:not(.section-active){
+  opacity:1!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+/* Hero now has copy + the boosted creature presentation in the same hero-content container. */
+.hero-content{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.08fr) minmax(380px,.92fr)!important;
+  align-items:center!important;
+  gap:54px!important;
+}
+.hero-copy{min-width:0}
+.hero-boosted{
+  justify-self:center;
+  width:min(100%,470px);
+  padding:22px 22px 18px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(8,16,31,.46),rgba(9,17,32,.24));
+  box-shadow:0 28px 70px rgba(2,7,18,.34),inset 0 1px rgba(255,255,255,.06);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.hero-boosted-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:10px;
+}
+.hero-boosted-head small{
+  color:rgba(255,255,255,.46);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.hero-boosted-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:end;
+  justify-items:center;
+  gap:10px;
+}
+.hero-boost-card{
+  min-width:0;
+  text-align:center;
+}
+.boost-pillar{
+  position:relative;
+  width:190px;
+  height:150px;
+  margin-inline:auto;
+}
+.pedestal-art{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  width:184px;
+  height:auto;
+  transform:translateX(-50%);
+  image-rendering:pixelated;
+  filter:drop-shadow(0 15px 18px rgba(0,0,0,.35));
+}
+.boost-monster{
+  position:absolute;
+  z-index:2;
+  left:50%;
+  top:15px;
+  width:66px;
+  height:66px;
+  object-fit:contain;
+  transform:translateX(-50%);
+  image-rendering:pixelated;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.42));
+  transition:transform .28s cubic-bezier(.22,.84,.24,1),filter .28s;
+}
+.hero-boost-card:hover .boost-monster{
+  transform:translateX(-50%) translateY(-5px) scale(1.1);
+  filter:drop-shadow(0 12px 14px rgba(0,0,0,.5));
+}
+.boost-pillar-label{
+  position:absolute;
+  z-index:3;
+  left:50%;
+  bottom:25px;
+  width:124px;
+  transform:translateX(-50%);
+  color:#f5d78d;
+  font-size:11px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  text-shadow:0 1px 2px #000,0 0 8px rgba(245,215,141,.22);
+}
+.boost-real-name{
+  display:inline-block;
+  margin-top:2px;
+  padding:4px 9px;
+  border-radius:999px;
+  color:rgba(236,244,255,.72);
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* Community is now a compact floating rail instead of a large content section. */
+.social-rail{
+  position:fixed;
+  z-index:80;
+  right:20px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:9px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  background:rgba(7,14,27,.54);
+  box-shadow:0 20px 50px rgba(1,6,16,.35),inset 0 1px rgba(255,255,255,.06);
+  backdrop-filter:blur(16px) saturate(1.15);
+  -webkit-backdrop-filter:blur(16px) saturate(1.15);
+}
+.social-rail-link{
+  width:50px;
+  height:50px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  color:#eaf9ff;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.09);
+  transition:transform .24s cubic-bezier(.22,.84,.24,1),background .24s,border-color .24s,box-shadow .24s;
+}
+.social-rail-link:hover,
+.social-rail-link:focus-visible{
+  transform:translateX(-5px) scale(1.06);
+  background:rgba(80,205,255,.12);
+  border-color:rgba(125,226,255,.33);
+  box-shadow:0 12px 28px rgba(0,0,0,.28);
+  outline:none;
+}
+.social-rail-link svg{
+  width:25px;
+  height:25px;
+  fill:currentColor;
+  stroke:currentColor;
+  stroke-width:1.7;
+}
+.social-rail-link svg rect,
+.social-rail-link svg circle{fill:none}
+.social-rail-wiki img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+  image-rendering:pixelated;
+  filter:drop-shadow(0 5px 8px rgba(0,0,0,.3));
+}
+
+/* Inner content animates; entire sections no longer transform over each other. */
+.motion-item{
+  opacity:0;
+  transform:translate3d(0,30px,0) scale(.985);
+  filter:blur(8px);
+  transition:
+    opacity .76s cubic-bezier(.22,.84,.24,1),
+    transform .76s cubic-bezier(.22,.84,.24,1),
+    filter .76s cubic-bezier(.22,.84,.24,1);
+  transition-delay:var(--motion-delay,0ms);
+  will-change:transform,opacity,filter;
+}
+.motion-item.motion-left{transform:translate3d(-36px,0,0) scale(.985)}
+.motion-item.motion-right{transform:translate3d(36px,0,0) scale(.985)}
+.motion-item.is-motion-visible{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+  filter:blur(0);
+}
+
+@media(max-width:1100px){
+  .hero-content{
+    grid-template-columns:minmax(0,1fr) minmax(340px,.82fr)!important;
+    gap:30px!important;
+  }
+  .boost-pillar{width:166px;height:138px}
+  .pedestal-art{width:166px}
+  .boost-monster{width:59px;height:59px;top:18px}
+  .boost-pillar-label{bottom:23px;width:112px;font-size:10px}
+}
+@media(max-width:960px){
+  .hero-content{
+    grid-template-columns:1fr!important;
+    align-content:center!important;
+    gap:34px!important;
+    padding-bottom:62px!important;
+  }
+  .hero-copy{max-width:650px}
+  .hero-boosted{justify-self:start;width:min(100%,520px)}
+  .social-rail{right:12px}
+}
+@media(max-width:680px){
+  .hero-boosted{
+    width:100%;
+    padding:18px 10px 14px;
+  }
+  .hero-boosted-grid{gap:0}
+  .boost-pillar{width:145px;height:124px}
+  .pedestal-art{width:145px}
+  .boost-monster{width:52px;height:52px;top:17px}
+  .boost-pillar-label{bottom:20px;width:98px;font-size:9px}
+  .social-rail{
+    top:auto;
+    right:50%;
+    bottom:14px;
+    transform:translateX(50%);
+    flex-direction:row;
+    border-radius:16px;
+  }
+  .social-rail-link:hover,
+  .social-rail-link:focus-visible{transform:translateY(-4px) scale(1.05)}
+  .cta-wrap{padding-bottom:52px}
+  .footer{padding-top:62px!important;padding-bottom:96px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .motion-item{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+  .hero-boost-card:hover .boost-monster{transform:translateX(-50%)}
+}
