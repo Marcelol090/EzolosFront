@@ -5,44 +5,83 @@
 
   ready(() => {
     const media = {
-      news:'./assets/news.gif',
-      rankings:'./assets/rankings.gif',
-      bazaar:'./assets/bazaar.gif',
-      community:'./assets/community.gif',
-      server:'./assets/server-info.gif',
-      wiki:'./assets/wiki.gif'
+      news:{ still:'./assets/news.png', anim:'./assets/news.gif' },
+      rankings:{ still:'./assets/rankings.png', anim:'./assets/wiki.gif' },
+      bazaar:{ still:'./assets/bazaar.png', anim:'./assets/community.gif' },
+      community:{ still:'./assets/community.png', anim:'./assets/bazaar.gif' },
+      server:{ still:'./assets/server-info.png', anim:'./assets/server-info.gif' },
+      wiki:{ still:'./assets/wiki.png', anim:'./assets/rankings.gif' }
     };
 
-    const menuButton = document.querySelector('#menuToggle');
-    const siteMenu = document.querySelector('#siteMenu');
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    menuButton?.addEventListener('click', () => {
-      const open = menuButton.getAttribute('aria-expanded') !== 'true';
-      menuButton.setAttribute('aria-expanded', String(open));
-      if (siteMenu) siteMenu.hidden = !open;
+    /* Preload animated sources so hover never flashes while the GIF is fetched. */
+    if(!reduced){
+      Object.values(media).forEach(({anim}) => {
+        const image=new Image();
+        image.src=anim;
+      });
+    }
+
+    const menuButton=document.querySelector('#menuToggle');
+    const siteMenu=document.querySelector('#siteMenu');
+
+    const closeMenu=() => {
+      if(!siteMenu || !menuButton) return;
+      siteMenu.hidden=true;
+      menuButton.setAttribute('aria-expanded','false');
+    };
+
+    menuButton?.addEventListener('click',()=>{
+      const open=menuButton.getAttribute('aria-expanded')!=='true';
+      menuButton.setAttribute('aria-expanded',String(open));
+      if(siteMenu) siteMenu.hidden=!open;
     });
 
-    siteMenu?.addEventListener('click', (event) => {
-      if (event.target.closest('a')) {
-        siteMenu.hidden = true;
-        menuButton?.setAttribute('aria-expanded', 'false');
-      }
+    siteMenu?.addEventListener('click',(event)=>{
+      if(event.target.closest('a')) closeMenu();
     });
 
-    const sectionTargets = ['#news','#rankings','#store','#community','#top','#wiki'];
-    const sectionIcons = [
+    document.addEventListener('keydown',(event)=>{
+      if(event.key==='Escape') closeMenu();
+    });
+
+    document.addEventListener('pointerdown',(event)=>{
+      if(siteMenu?.hidden) return;
+      if(siteMenu?.contains(event.target) || menuButton?.contains(event.target)) return;
+      closeMenu();
+    });
+
+    const sectionTargets=['#news','#rankings','#store','#community','#top','#wiki'];
+    const sectionIcons=[
       media.news,
       media.rankings,
-      media.community,
       media.bazaar,
+      media.community,
       media.server,
       media.wiki
     ];
 
-    [...document.querySelectorAll('.info-card')].forEach((card,index) => {
+    [...document.querySelectorAll('.info-card')].forEach((card,index)=>{
       const icon=card.querySelector('.info-icon');
-      if(icon && sectionIcons[index]){
-        icon.innerHTML='<img src="'+sectionIcons[index]+'" alt="" loading="eager">';
+      const iconMedia=sectionIcons[index];
+
+      if(icon && iconMedia){
+        icon.innerHTML='<img class="portal-icon-image" src="'+iconMedia.still+'" data-still="'+iconMedia.still+'" data-animated="'+iconMedia.anim+'" alt="" decoding="async" draggable="false">';
+        const image=icon.querySelector('.portal-icon-image');
+
+        if(!reduced && image){
+          const showAnimated=()=>{
+            if(image.src.endsWith(iconMedia.anim.replace('./',''))) return;
+            image.src=iconMedia.anim;
+          };
+          const showStill=()=>{ image.src=iconMedia.still; };
+
+          card.addEventListener('pointerenter',showAnimated);
+          card.addEventListener('pointerleave',showStill);
+          card.addEventListener('focusin',showAnimated);
+          card.addEventListener('focusout',showStill);
+        }
       }
 
       if(!card.querySelector('.card-action')){
@@ -56,7 +95,7 @@
       card.setAttribute('role','link');
       card.setAttribute('aria-label',(card.querySelector('h3')?.textContent||'Section')+' section');
 
-      const openTarget=() => {
+      const openTarget=()=>{
         const selector=sectionTargets[index];
         const target=document.querySelector(selector);
         if(!target) return;
@@ -64,9 +103,9 @@
         if(selector==='#community' || selector==='#wiki'){
           target.animate(
             [
-              {transform:getComputedStyle(target).transform,filter:'brightness(1)'},
-              {transform:getComputedStyle(target).transform,filter:'brightness(1.35)'},
-              {transform:getComputedStyle(target).transform,filter:'brightness(1)'}
+              {filter:'brightness(1)'},
+              {filter:'brightness(1.35)'},
+              {filter:'brightness(1)'}
             ],
             {duration:520,easing:'ease-out'}
           );
@@ -85,7 +124,6 @@
       });
     });
 
-    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealEls=[...document.querySelectorAll('[data-reveal]')];
 
     const motionSelectors=[
