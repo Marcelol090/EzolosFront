@@ -1,0 +1,8 @@
+{
+  "name": "ezolos-front",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rm -rf public && mkdir -p public && cp index.html styles.css app.js store-ring.js public/ && cp -R assets public/assets"
+  }
+}
