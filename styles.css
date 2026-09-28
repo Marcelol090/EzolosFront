@@ -220,3 +220,110 @@ body::after{
   [data-reveal]{opacity:1!important;transform:none!important;filter:none!important}
   .section-shell{transform:none!important;opacity:1!important}
 }
+
+/* === EZOLOS BACKGROUND + ICON + SCROLL FIX V2 === */
+
+/* Keep the monk artwork fully visible instead of cropping it with cover. */
+body::before{
+  background-image:
+    linear-gradient(180deg,rgba(7,12,23,.90),rgba(7,12,23,.70) 34%,rgba(7,12,23,.86)),
+    radial-gradient(circle at 50% 16%,rgba(122,171,255,.18),transparent 36%),
+    var(--page-bg-image)!important;
+  background-size:100% 100%,100% 100%,contain!important;
+  background-position:center,center,center center!important;
+  background-repeat:no-repeat,no-repeat,no-repeat!important;
+  background-color:#070d19;
+  transform:none!important;
+  filter:none!important;
+}
+body::after{
+  background:
+    linear-gradient(180deg,rgba(3,8,18,.05),rgba(3,8,18,.17) 36%,rgba(3,8,18,.42) 100%),
+    radial-gradient(circle at 50% 48%,transparent 0 36%,rgba(2,6,15,.25) 72%,rgba(2,6,15,.5) 100%)!important;
+}
+
+/* Bazaar and Community use larger Tibia GIFs so their detail remains readable. */
+.info-card:nth-child(3) .info-icon,
+.info-card:nth-child(4) .info-icon{
+  width:76px!important;
+  height:76px!important;
+  border-radius:18px!important;
+}
+.info-card:nth-child(3) .info-icon img,
+.info-card:nth-child(4) .info-icon img{
+  width:60px!important;
+  height:60px!important;
+  image-rendering:pixelated;
+}
+.info-card:nth-child(1) .info-icon img,
+.info-card:nth-child(2) .info-icon img,
+.info-card:nth-child(5) .info-icon img,
+.info-card:nth-child(6) .info-icon img{
+  width:48px!important;
+  height:48px!important;
+  image-rendering:pixelated;
+}
+
+/* Every major section visibly reacts to scroll, using only opacity/transform/filter. */
+.section-shell{
+  opacity:0!important;
+  transform:translate3d(0,46px,0) scale(.988)!important;
+  filter:blur(10px);
+  transition:
+    opacity .82s cubic-bezier(.22,.84,.24,1),
+    transform .82s cubic-bezier(.22,.84,.24,1),
+    filter .82s cubic-bezier(.22,.84,.24,1)!important;
+  will-change:transform,opacity,filter;
+}
+.section-shell.section-active{
+  opacity:1!important;
+  transform:translate3d(0,0,0) scale(1)!important;
+  filter:blur(0);
+}
+.motion-item{
+  opacity:0;
+  transform:translate3d(0,26px,0) scale(.985);
+  filter:blur(8px);
+  transition:
+    opacity .72s cubic-bezier(.22,.84,.24,1),
+    transform .72s cubic-bezier(.22,.84,.24,1),
+    filter .72s cubic-bezier(.22,.84,.24,1);
+  transition-delay:var(--motion-delay,0ms);
+  will-change:transform,opacity,filter;
+}
+.motion-item.motion-left{transform:translate3d(-34px,0,0) scale(.985)}
+.motion-item.motion-right{transform:translate3d(34px,0,0) scale(.985)}
+.motion-item.is-motion-visible{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+  filter:blur(0);
+}
+
+/* Prevent an already animated parent from hiding nested items permanently. */
+.section-shell.section-active [data-reveal].is-visible{opacity:1}
+
+/* Responsive background: preserve the whole artwork on phones too. */
+@media(max-width:680px){
+  body::before{
+    background-size:100% 100%,100% 100%,contain!important;
+    background-position:center,center,center top!important;
+  }
+  .info-card:nth-child(3) .info-icon,
+  .info-card:nth-child(4) .info-icon{
+    width:70px!important;
+    height:70px!important;
+  }
+  .info-card:nth-child(3) .info-icon img,
+  .info-card:nth-child(4) .info-icon img{
+    width:56px!important;
+    height:56px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .section-shell,.motion-item{
+    opacity:1!important;
+    transform:none!important;
+    filter:none!important;
+    transition:none!important;
+  }
+}

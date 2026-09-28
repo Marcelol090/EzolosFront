@@ -29,14 +29,26 @@
       }
     });
 
+    /*
+     * Correct icon association:
+     * Bazaar uses Yasir (merchant), while Community uses the previous item/character GIF.
+     */
     const sectionTargets = ['#news','#rankings','#store','#community','#top','#wiki'];
-    const sectionIcons = [media.news,media.rankings,media.bazaar,media.community,media.server,media.wiki];
+    const sectionIcons = [
+      media.news,
+      media.rankings,
+      media.community,
+      media.bazaar,
+      media.server,
+      media.wiki
+    ];
 
     [...document.querySelectorAll('.info-card')].forEach((card, index) => {
       const icon = card.querySelector('.info-icon');
       if (icon && sectionIcons[index]) {
-        icon.innerHTML = '<img src="' + sectionIcons[index] + '" alt="" loading="lazy">';
+        icon.innerHTML = '<img src="' + sectionIcons[index] + '" alt="" loading="eager">';
       }
+
       if (!card.querySelector('.card-action')) {
         const action = document.createElement('span');
         action.className = 'card-action';
@@ -49,11 +61,12 @@
       card.setAttribute('aria-label',(card.querySelector('h3')?.textContent || 'Section') + ' section');
 
       const openTarget = () => {
-        const target = document.querySelector(sectionTargets[index]);
-        target?.scrollIntoView({behavior:'smooth',block:'start'});
+        document.querySelector(sectionTargets[index])
+          ?.scrollIntoView({behavior:'smooth',block:'start'});
       };
-      card.addEventListener('click',openTarget);
-      card.addEventListener('keydown',(event) => {
+
+      card.addEventListener('click', openTarget);
+      card.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
           openTarget();
@@ -61,43 +74,83 @@
       });
     });
 
-    const revealEls = [...document.querySelectorAll('[data-reveal]')];
-    const sectionEls = [...document.querySelectorAll('.section,.store-section,.cta-wrap,.footer')];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Animate all major sections, including ones that previously had no data-reveal child. */
+    const sectionEls = [...document.querySelectorAll(
+      '.overview,.store-section,#news,.boosted,.cta-wrap,.footer'
+    )];
     sectionEls.forEach((section) => section.classList.add('section-shell'));
 
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) {
-      revealEls.forEach((el) => el.classList.add('is-visible'));
-      sectionEls.forEach((el) => el.classList.add('section-active'));
-    } else {
-      const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        });
-      }, {threshold:.14,rootMargin:'0px 0px -8% 0px'});
-      revealEls.forEach((el) => revealObserver.observe(el));
+    /* Fine-grained motion for headings/cards/items in every section. */
+    const motionSelectors = [
+      '.overview-head',
+      '.info-card',
+      '.store-copy > *',
+      '.ring-column',
+      '.news-head',
+      '.news-card',
+      '.boost-panel',
+      '.community-panel',
+      '.boost-card',
+      '.community-item',
+      '.cta > *',
+      '.footer-grid > *',
+      '.footer-bottom'
+    ];
 
+    const motionItems = [];
+    document.querySelectorAll(motionSelectors.join(',')).forEach((el, index) => {
+      el.classList.add('motion-item');
+      const localIndex = index % 6;
+      el.style.setProperty('--motion-delay', (localIndex * 70) + 'ms');
+
+      if (el.matches('.store-copy,.boost-panel')) el.classList.add('motion-left');
+      if (el.matches('.ring-column,.community-panel')) el.classList.add('motion-right');
+      motionItems.push(el);
+    });
+
+    const revealEls = [...document.querySelectorAll('[data-reveal]')];
+
+    if (reduced) {
+      sectionEls.forEach((el) => el.classList.add('section-active'));
+      revealEls.forEach((el) => el.classList.add('is-visible'));
+      motionItems.forEach((el) => el.classList.add('is-motion-visible'));
+    } else {
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('section-active');
+          entry.target.classList.toggle('section-active', entry.isIntersecting);
         });
-      }, {threshold:.16,rootMargin:'0px 0px -10% 0px'});
+      }, { threshold:.10, rootMargin:'0px 0px -8% 0px' });
       sectionEls.forEach((el) => sectionObserver.observe(el));
 
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+      }, { threshold:.12, rootMargin:'0px 0px -7% 0px' });
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      const motionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('is-motion-visible', entry.isIntersecting);
+        });
+      }, { threshold:.10, rootMargin:'0px 0px -6% 0px' });
+      motionItems.forEach((el) => motionObserver.observe(el));
+
+      /* Hero gets a small parallax only; global background stays fixed and whole. */
       const hero = document.querySelector('.hero');
       if (hero) {
         let ticking = false;
-        addEventListener('scroll',() => {
+        addEventListener('scroll', () => {
           if (ticking) return;
           ticking = true;
           requestAnimationFrame(() => {
-            const y = Math.min(scrollY * .11, 40);
+            const y = Math.min(scrollY * .08, 30);
             hero.style.backgroundPosition = 'center calc(31% + ' + y + 'px)';
             ticking = false;
           });
-        },{passive:true});
+        }, { passive:true });
       }
     }
 
