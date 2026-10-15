@@ -125,7 +125,15 @@
       if(!parent || !still) return;
       const file = still.getAttribute("src")?.split("/").pop() || "";
       const key = file.split(".")[0];
-      const persistent = card.classList.contains("portal-card--yasir");
+      // Bazaar uses one persistent GIF sprite (with PNG only for reduced motion).
+      // Never create an overlay GIF on this card: two frames repainting caused flicker.
+      if(card.classList.contains("portal-card--yasir")) {
+        still.addEventListener("error",() => {
+          still.src = "./assets/bazaar.png";
+        },{once:true});
+        return;
+      }
+      const persistent = false;
       const src = animatedAssets[file];
       still.addEventListener("error",() => { still.hidden = true; ensureFallback(parent,key); },{once:true});
       if(still.complete && !still.naturalWidth) { still.hidden = true; ensureFallback(parent,key); }

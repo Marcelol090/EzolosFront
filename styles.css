@@ -1837,3 +1837,97 @@ h1,h2,h3,h4{font-kerning:normal}
   .portal-card--yasir .portal-card-icon img:not(.portal-animated-icon){visibility:visible!important;opacity:1!important}
   .hero-boost-card,.hero-boost-card:hover{transform:none!important}
 }
+
+
+/* === Bazaar merchant medallion: inspired by Tibia item frames, Ezolos purple/blue alloy === */
+.portal-card--yasir{
+  isolation:isolate;
+  border-color:rgba(135,131,205,.29)!important;
+  background:
+    radial-gradient(ellipse at 5% 20%,rgba(101,71,174,.17),transparent 55%),
+    linear-gradient(135deg,rgba(21,24,54,.98),rgba(9,17,35,.95))!important;
+}
+.portal-card--yasir::before{
+  opacity:1!important;inset:0!important;z-index:-1;
+  background:radial-gradient(ellipse at 0% 0%,rgba(91,91,178,.14),transparent 72%)!important;
+}
+.portal-card--yasir:hover,.portal-card--yasir:focus-visible{
+  border-color:rgba(178,160,244,.65)!important;
+  box-shadow:0 10px 30px rgba(0,0,12,.45),0 22px 42px rgba(37,26,90,.2),inset 0 1px rgba(220,207,255,.12)!important;
+}
+.portal-card--yasir .merchant-medallion{
+  --medallion-size:82px;
+  box-sizing:border-box;
+  position:relative;
+  flex:0 0 var(--medallion-size);
+  width:var(--medallion-size)!important;
+  height:var(--medallion-size)!important;
+  min-width:var(--medallion-size)!important;
+  min-height:var(--medallion-size)!important;
+  border:0!important;
+  border-radius:14px!important;
+  padding:0!important;
+  overflow:visible!important;
+  background:
+    radial-gradient(ellipse at 48% 40%,rgba(64,82,138,.32),transparent 67%),
+    linear-gradient(140deg,#181c3f,#0b1229)!important;
+  box-shadow:
+    0 8px 20px rgba(0,0,14,.32),
+    0 0 0 1px rgba(126,129,204,.17),
+    inset 0 1px rgba(231,220,255,.11)!important;
+  animation:none!important;
+  translate:none!important;
+}
+.portal-card--yasir .merchant-medallion::before{
+  content:"";position:absolute;inset:6px;
+  border-radius:9px;border:1px solid rgba(118,129,203,.16);
+  background:radial-gradient(circle at 50% 35%,rgba(101,77,150,.17),transparent 75%);
+  transform:none!important;
+  animation:none!important;
+  pointer-events:none;z-index:0;opacity:1!important;
+}
+.portal-card--yasir .merchant-sprite{
+  display:block;
+  position:absolute;
+  z-index:1;
+  width:64px;
+  height:64px;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%)!important;
+  margin:0;
+  overflow:visible;
+  pointer-events:none;
+}
+.portal-card--yasir .merchant-sprite img{
+  display:block!important;
+  position:static!important;
+  width:64px!important;height:64px!important;
+  min-width:64px!important;min-height:64px!important;
+  max-width:none!important;max-height:none!important;
+  opacity:1!important;visibility:visible!important;
+  object-fit:contain!important;
+  image-rendering:pixelated!important;
+  transform:none!important;
+  animation:none!important;
+  filter:none!important;
+  transition:none!important;
+  will-change:auto!important;
+}
+.portal-card--yasir .merchant-frame{
+  position:absolute;inset:-3px;
+  width:calc(100% + 6px);height:calc(100% + 6px);
+  overflow:visible;
+  pointer-events:none;z-index:3;
+  filter:drop-shadow(0 3px 3px rgba(0,0,15,.22));
+  opacity:.94;
+  transition:opacity .25s ease;
+}
+.portal-card--yasir:hover .merchant-frame,.portal-card--yasir:focus-visible .merchant-frame{opacity:1}
+.portal-card--yasir .portal-card-icon.has-fallback .merchant-sprite img{opacity:1!important}
+@media(max-width:680px){
+  .portal-card--yasir .merchant-medallion{--medallion-size:76px}
+}
+@media(prefers-reduced-motion:reduce){
+  .portal-card--yasir .merchant-medallion{animation:none!important;translate:none!important}
+  .portal-card--yasir .merchant-frame{transition:none!important}
+}

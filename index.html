@@ -255,9 +255,31 @@
             <span class="portal-card-icon"><img src="./assets/rankings.png" alt="" width="48" height="48" loading="lazy"></span>
             <span class="portal-card-copy"><strong>Rankings</strong><span>Highscores, leaderboards, bosses and rare discoveries.</span><span class="portal-card-action">View Rankings <span aria-hidden="true">↗</span></span></span>
           </a>
-          <a class="portal-card portal-card--yasir" href="https://ezolos.com/?subtopic=currentcharactertrades" data-reveal="up">
-            <span class="portal-card-icon"><img src="./assets/bazaar.png" alt="" width="48" height="48" loading="lazy"></span>
-            <span class="portal-card-copy"><strong>Bazaar</strong><span>Character auctions, bids and watched listings.</span><span class="portal-card-action">Open Bazaar <span aria-hidden="true">↗</span></span></span>
+          <a class="portal-card portal-card--yasir" href="https://ezolos.com/?subtopic=currentcharactertrades" data-reveal="up" aria-label="Bazaar, character auctions and trading">
+            <span class="portal-card-icon merchant-medallion">
+              <picture class="merchant-sprite">
+                <source media="(prefers-reduced-motion: reduce)" srcset="./assets/bazaar.png">
+                <img src="./assets/community.gif" alt="" width="64" height="64" loading="eager" decoding="async" draggable="false">
+              </picture>
+              <svg class="merchant-frame" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="merchant-metal" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#e1dbff"/><stop offset=".26" stop-color="#7e80b9"/>
+                    <stop offset=".55" stop-color="#352c62"/><stop offset=".83" stop-color="#8dbcf6"/>
+                    <stop offset="1" stop-color="#d7c6ff"/>
+                  </linearGradient>
+                  <linearGradient id="merchant-rim" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#514d85"/><stop offset=".52" stop-color="#8d81bd"/><stop offset="1" stop-color="#3b547f"/>
+                  </linearGradient>
+                </defs>
+                <path d="M18 3H78L93 18V78L78 93H18L3 78V18Z" fill="none" stroke="url(#merchant-metal)" stroke-width="2.2"/>
+                <path d="M20 9H76L87 20V76L76 87H20L9 76V20Z" fill="none" stroke="url(#merchant-rim)" stroke-width="1"/>
+                <path d="M18 3V18H3M78 3V18H93M3 78H18V93M93 78H78V93" fill="none" stroke="#c0ace7" stroke-opacity=".68" stroke-width="1.5"/>
+                <path d="M48 4 52 9 48 14 44 9ZM48 82 52 87 48 92 44 87ZM4 48 9 44 14 48 9 52ZM82 48 87 44 92 48 87 52Z" fill="#8ccaff" stroke="#261e49" stroke-width="1.2"/>
+                <path d="M24 14h12M60 14h12M24 82h12M60 82h12" stroke="#c6acff" stroke-opacity=".42" stroke-width="1.1"/>
+              </svg>
+            </span>
+            <span class="portal-card-copy"><strong>Bazaar</strong><span>Trade characters and discover rare opportunities.</span><span class="portal-card-action">Explore Bazaar <span aria-hidden="true">↗</span></span></span>
           </a>
           <a class="portal-card" href="https://ezolos.com/?subtopic=characters" data-reveal="up">
             <span class="portal-card-icon"><img src="./assets/community.png" alt="" width="48" height="48" loading="lazy"></span>
