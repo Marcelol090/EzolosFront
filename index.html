@@ -34,6 +34,12 @@
 
         <div class="nav-actions">
           <a class="btn btn-primary nav-play" href="#download">Play now</a>
+          <a class="nav-account" href="https://ezolos.com/?subtopic=accountmanagement" aria-label="Sign in to your Ezolos account" title="Account management">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.5"></circle>
+              <path d="M5.5 20a6.5 6.5 0 0 1 13 0"></path>
+            </svg>
+          </a>
           <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteMenu" aria-label="Open menu">
             <span></span><span></span><span></span>
           </button>
@@ -193,12 +199,13 @@
         </div>
 
         <div class="ring-column" data-reveal="right">
-          <div class="ui-ring" data-ui-ring tabindex="0" role="region" aria-roledescription="carousel" aria-label="Coins with bonus">
+          <div data-ui-ring tabindex="0" role="region" aria-roledescription="carousel" aria-label="Coins with bonus" class="ui-ring ui-ring-premium">
             <div class="ring-shadow" aria-hidden="true"></div>
             <div class="ring-line" aria-hidden="true"></div>
-            <button class="ring-arrow ring-prev" type="button" data-ring-prev aria-label="Previous pack">‹</button>
-            <div class="ring-stage" data-ring-stage></div>
-            <button class="ring-arrow ring-next" type="button" data-ring-next aria-label="Next pack">›</button>
+            <div class="ring-stage" data-ring-stage aria-live="off"></div>
+            <button type="button" data-ring-prev aria-label="Previous coin pack" class="ring-arrow ring-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 19-7-7 7-7"/></svg></button>
+            <button type="button" data-ring-next aria-label="Next coin pack" class="ring-arrow ring-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+            <span class="ring-pause-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg> Paused</span>
             <p class="ring-help">Drag · arrows · click to inspect</p>
           </div>
         </div>
@@ -255,8 +262,8 @@
     </div>
   </main>
 
-  <footer class="footer" id="account">
-    <div class="container">
+  <footer class="footer footer-refined" id="account">
+    <div class="container footer-inner">
       <div class="footer-grid">
         <div><h4>Ezolos</h4><p>A custom MMORPG experience built around progression, competition, discovery and community.</p></div>
         <div><h4>Legal</h4><a href="https://ezolos.com/?subtopic=serverrules">Server Rules</a><a href="https://ezolos.com/?subtopic=legal">Legal</a><a href="https://ezolos.com/?subtopic=supportlist">Support</a></div>
