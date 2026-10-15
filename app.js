@@ -25,6 +25,59 @@
       if(!siteMenu.contains(e.target) && !menuButton?.contains(e.target)) closeMenu();
     });
 
+
+    const streamToggle = document.querySelector("[data-ui-streams-toggle]");
+    const streamPanel = document.querySelector("#ui-streams");
+    const streamClose = document.querySelector("[data-ui-streams-close]");
+    const streamWidget = document.querySelector("[data-ui-streams-widget]");
+    const setStreamsOpen = (open) => {
+      if (!streamToggle || !streamPanel) return;
+      streamToggle.setAttribute("aria-expanded", String(open));
+      streamPanel.hidden = !open;
+      streamWidget?.classList.toggle("streams-open", open);
+    };
+    streamToggle?.addEventListener("click", () => setStreamsOpen(streamToggle.getAttribute("aria-expanded") !== "true"));
+    streamClose?.addEventListener("click", () => { setStreamsOpen(false); streamToggle?.focus(); });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && streamToggle?.getAttribute("aria-expanded") === "true") {
+        setStreamsOpen(false);
+        streamToggle.focus();
+      }
+    });
+    document.addEventListener("pointerdown", e => {
+      if (streamWidget && !streamWidget.contains(e.target)) setStreamsOpen(false);
+    });
+    // Configuration hook for later verified channels. This release deliberately does not invent live streams.
+    const streamList = document.querySelector("[data-ui-streams-list]");
+    const streamChannels = Array.isArray(window.EZOLOS_STREAM_CHANNELS) ? window.EZOLOS_STREAM_CHANNELS : [];
+    const cleanText = (value) => String(value ?? "").slice(0, 80);
+    const isValidTwitch = (url) => {
+      try { const u = new URL(url); return u.protocol === "https:" && (u.hostname === "www.twitch.tv" || u.hostname === "twitch.tv"); }
+      catch { return false; }
+    };
+    const trustedChannels = streamChannels.filter(channel => channel && isValidTwitch(channel.url)).slice(0, 12);
+    if (trustedChannels.length && streamList) {
+      streamList.textContent = "";
+      trustedChannels.forEach(channel => {
+        const link = document.createElement("a");
+        link.href = channel.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.className = "streams-channel";
+        const icon = document.createElement("span");
+        icon.className = "streams-channel-avatar";
+        icon.textContent = cleanText(channel.name || "S").charAt(0).toUpperCase();
+        const info = document.createElement("span");
+        const title = document.createElement("strong");
+        title.textContent = cleanText(channel.name || "Streamer");
+        const desc = document.createElement("small");
+        desc.textContent = cleanText(channel.description || "Watch on Twitch");
+        info.append(title, desc);
+        link.append(icon, info);
+        streamList.appendChild(link);
+      });
+    }
+
     /*
      * Mapping is deliberate: the first asset set had wiki/rankings and
      * bazaar/community filenames interchanged. Stable PNG remains visible,
@@ -65,7 +118,7 @@
       parent.classList.add("has-fallback");
     };
     function prepareIcon(card) {
-      if(prepared.has(card) || reduced) return;
+      if(prepared.has(card)) return;
       prepared.add(card);
       const parent = card.querySelector(".portal-card-icon");
       const still = parent?.querySelector("img");
@@ -73,10 +126,13 @@
       const file = still.getAttribute("src")?.split("/").pop() || "";
       const key = file.split(".")[0];
       const src = animatedAssets[file];
-      still.addEventListener("error",() => ensureFallback(parent,key),{once:true});
-      if(still.complete && !still.naturalWidth) ensureFallback(parent,key);
+      still.addEventListener("error",() => { still.hidden = true; ensureFallback(parent,key); },{once:true});
+      if(still.complete && !still.naturalWidth) { still.hidden = true; ensureFallback(parent,key); }
       if(!src) { ensureFallback(parent,key); return; }
+      if(reduced) return;
       const gif = document.createElement("img");
+      gif.width = 64;
+      gif.height = 64;
       gif.className = "portal-animated-icon";
       gif.alt = "";
       gif.setAttribute("aria-hidden","true");
@@ -85,7 +141,7 @@
       gif.onload = () => {
         if(gif.naturalWidth) gif.classList.add("is-loaded");
       };
-      gif.onerror = () => { gif.remove(); ensureFallback(parent,key); };
+      gif.onerror = () => { gif.remove(); if (!still.naturalWidth) ensureFallback(parent,key); };
       gif.src = src;
       parent.appendChild(gif);
       if(gif.complete && gif.naturalWidth) gif.classList.add("is-loaded");
@@ -146,7 +202,7 @@
     staged.forEach((el,i)=>{
       if(el.hasAttribute("data-reveal")) return;
       el.classList.add("motion-item");
-      el.style.setProperty("--motion-delay",(i%5*78)+"ms");
+      el.style.setProperty("--motion-delay",(i%5*105)+"ms");
       if(el.matches(".ring-column")) el.classList.add("motion-right");
       if(el.matches(".store-copy > *")) el.classList.add("motion-left");
     });

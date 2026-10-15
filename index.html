@@ -7,6 +7,9 @@
   <title>Ezolos — Hunt. Evolve. Dominate.</title>
   <meta name="description" content="Ezolos — a custom MMORPG experience with progression, rankings, bazaar, wiki and community." />
   <link rel="preconnect" href="https://www.ezolos.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -33,7 +36,7 @@
         </nav>
 
         <div class="nav-actions">
-          <a class="btn btn-primary nav-play" href="#download">Play now</a>
+          <a class="btn btn-primary nav-play btn-fantasy" href="#download">Play now</a>
           <a class="nav-account" href="https://ezolos.com/?subtopic=accountmanagement" aria-label="Sign in to your Ezolos account" title="Account management">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="8" r="3.5"></circle>
@@ -159,6 +162,25 @@
     </a>
   </aside>
 
+
+  <!-- Accessible floating stream directory, separated from the social rail. -->
+  <div class="streams-widget" data-ui-streams-widget>
+    <button type="button" data-ui-streams-toggle aria-expanded="false" aria-controls="ui-streams" aria-label="Streams" class="streams-toggle">
+      <span class="streams-toggle-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></svg></span>
+      <span>Streams</span>
+      <span class="streams-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg></span>
+    </button>
+    <section id="ui-streams" class="streams-panel" aria-label="Ezolos streams" hidden>
+      <div class="streams-panel-head"><span class="streams-label"><span class="streams-indicator" aria-hidden="true"></span>Community broadcasts</span>
+        <button type="button" data-ui-streams-close class="streams-close" aria-label="Close streams"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+      <div data-ui-streams-list class="streams-panel-list">
+        <div class="streams-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m10 9 5 3-5 3V9Z"/></svg>
+        <strong>No featured streams right now</strong><p>Creators will appear here when a verified Ezolos channel is added.</p></div>
+      </div>
+      <a class="streams-explore" href="https://www.twitch.tv/directory/category/tibia" target="_blank" rel="noopener noreferrer">Browse Tibia streams <span aria-hidden="true">↗</span></a>
+    </section>
+  </div>
+
   <main>
     <section class="store-section" id="store">
       <div class="store-glow store-glow-a" aria-hidden="true"></div>
@@ -256,7 +278,7 @@
       <section class="cta">
         <h2>Ready to enter Ezolos?</h2>
         <p>Create your account, download the client and continue the adventure.</p>
-        <a class="btn btn-primary" href="https://ezolos.com/?subtopic=download">Download Ezolos</a>
+        <a class="btn btn-primary btn-fantasy" href="https://ezolos.com/?subtopic=download">Download Ezolos</a>
         <span class="price-note">One world. Custom systems. Community-driven progression.</span>
       </section>
     </div>
@@ -285,7 +307,7 @@
       <h3 data-dialog-name>1950 Coins</h3>
       <p>Transferable Ezolos Coins. Bonus is already included in the displayed total.</p>
       <div class="dialog-meta"><strong data-dialog-price>R$ 150.00</strong><span data-dialog-bonus>+30% bonus</span></div>
-      <a class="btn btn-primary" href="?subtopic=donate">Go to store</a>
+      <a class="btn btn-primary" href="https://ezolos.com/?subtopic=donate">Go to store</a>
     </div>
   </dialog>
 
