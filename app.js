@@ -125,6 +125,7 @@
       if(!parent || !still) return;
       const file = still.getAttribute("src")?.split("/").pop() || "";
       const key = file.split(".")[0];
+      const persistent = card.classList.contains("portal-card--yasir");
       const src = animatedAssets[file];
       still.addEventListener("error",() => { still.hidden = true; ensureFallback(parent,key); },{once:true});
       if(still.complete && !still.naturalWidth) { still.hidden = true; ensureFallback(parent,key); }
@@ -139,19 +140,28 @@
       gif.draggable = false;
       gif.decoding = "async";
       gif.onload = () => {
-        if(gif.naturalWidth) gif.classList.add("is-loaded");
+        if(gif.naturalWidth) {
+          gif.classList.add("is-loaded");
+          if(persistent) card.classList.add("persistent-sprite-loaded");
+        }
       };
-      gif.onerror = () => { gif.remove(); if (!still.naturalWidth) ensureFallback(parent,key); };
+      gif.onerror = () => { card.classList.remove("persistent-sprite-loaded"); gif.remove(); if (!still.naturalWidth) ensureFallback(parent,key); };
       gif.src = src;
       parent.appendChild(gif);
-      if(gif.complete && gif.naturalWidth) gif.classList.add("is-loaded");
+      if(gif.complete && gif.naturalWidth) {
+        gif.classList.add("is-loaded");
+        if(persistent) card.classList.add("persistent-sprite-loaded");
+      }
     }
     // Prepares icons as they near the viewport instead of waking every GIF at page load.
     if("IntersectionObserver" in window) {
       const iconLoadObserver = new IntersectionObserver(entries => entries.forEach(entry => {
         if(entry.isIntersecting) { prepareIcon(entry.target); iconLoadObserver.unobserve(entry.target); }
       }),{rootMargin:"230px 0px",threshold:0});
-      portalCards.forEach(card => iconLoadObserver.observe(card));
+      portalCards.forEach(card => {
+        if(card.classList.contains("portal-card--yasir")) prepareIcon(card);
+        else iconLoadObserver.observe(card);
+      });
     } else portalCards.forEach(prepareIcon);
 
     // Heroicons are the fallback for absent or unsupported sprites.

@@ -1731,3 +1731,109 @@ h1,h2,h3,h4{font-kerning:normal}
   .portal-card-icon .portal-animated-icon{display:none!important}
   .portal-card-icon img:not(.portal-animated-icon){opacity:1!important}
 }
+
+
+/* === EZOLOS V9 - stream isolation, better status glyphs and stable creature canvases === */
+:root{--ez-night:#060817;--ez-purple:#9582e8;--ez-blue:#70a8ed}
+.streams-widget.streams-widget-right{
+  position:fixed!important;left:auto!important;right:23px!important;bottom:22px!important;top:auto!important;
+  z-index:125!important;display:flex;flex-direction:column;align-items:flex-end!important;gap:10px;
+  pointer-events:none;
+}
+.streams-widget-right>.streams-toggle,.streams-widget-right>.streams-panel{pointer-events:auto}
+.streams-widget-right .streams-toggle{
+  border-color:rgba(151,133,232,.52)!important;
+  background:linear-gradient(130deg,rgba(20,22,50,.98),rgba(9,14,37,.97))!important;
+  box-shadow:0 6px 12px rgba(1,4,18,.36),0 22px 45px rgba(2,6,25,.46),inset 0 1px rgba(214,208,255,.14)!important;
+}
+.streams-widget-right .streams-twitch-icon{
+  color:#c5a6ff!important;background:rgba(145,99,225,.18)!important;
+  box-shadow:inset 0 0 0 1px rgba(176,133,246,.36)!important;
+}
+.streams-widget-right .streams-twitch-icon svg{width:19px!important;height:19px!important;transform:none!important}
+.streams-widget-right .streams-panel{order:-1}
+.streams-widget-right .streams-toggle:hover,.streams-widget-right .streams-toggle:focus-visible{
+  border-color:rgba(177,151,250,.86)!important;transform:translateY(-2px);
+}
+.social-rail{right:18px!important;top:50%!important;bottom:auto!important;transform:translateY(-50%)!important}
+.social-rail-link svg{stroke:none}
+.social-rail-instagram svg{stroke:currentColor!important}
+/* Compact server bar with distinct game-inspired outline icons. */
+.hero-server-strip .header-status{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.hero-server-strip .header-stat{display:flex;align-items:center;min-width:0!important;gap:9px!important}
+.hero-server-strip .header-stat-icon{
+  flex:0 0 34px;display:grid!important;place-items:center;
+  width:34px!important;height:34px!important;
+  border:1px solid rgba(154,145,233,.25)!important;
+  background:linear-gradient(140deg,rgba(74,65,157,.17),rgba(36,77,149,.11))!important;
+  box-shadow:inset 0 1px rgba(240,236,255,.08),0 4px 11px rgba(1,5,21,.23)!important;
+}
+.hero-server-strip .header-stat-icon svg{width:18px;height:18px;display:block;flex:none}
+.hero-server-strip .header-stat-players .header-stat-icon{color:#9edbff!important}
+.hero-server-strip .header-stat-world .header-stat-icon{color:#baa5ff!important}
+.hero-server-strip .header-stat-save .header-stat-icon{color:#8fb9ff!important}
+.hero-server-strip .header-stat-live.is-offline .header-stat-icon{
+  color:#e19be4!important;background:rgba(128,68,147,.19)!important;border-color:rgba(177,102,196,.28)!important;
+}
+.hero-server-strip .header-stat-live:not(.is-offline) .header-stat-icon{color:#92dfc4!important}
+.hero-server-strip .header-stat strong{font-size:clamp(11px,.95vw,15px)!important;white-space:nowrap}
+.hero-server-strip .header-stat small{
+  display:block;font-family:"Inter",system-ui,sans-serif!important;
+  font-size:8.5px!important;color:#b6bbda!important;letter-spacing:.06em!important;line-height:1.4;
+  text-transform:uppercase;
+}
+.hero-boosted-head .eyebrow,.portal-news-head h2,.store-panel-heading h2{
+  letter-spacing:.045em!important;line-height:1.4!important;
+}
+.hero-boosted-head small{letter-spacing:.08em!important;font-weight:700;color:#bbb7d7}
+.portal-news-head h2{display:inline-flex;align-items:center;gap:10px;min-width:0}
+.portal-news-head h2 .news-title-icon{
+  flex:none;display:block;width:30px!important;height:30px!important;max-width:none!important;
+  object-fit:contain!important;image-rendering:pixelated;filter:drop-shadow(0 3px 7px rgba(64,48,155,.25));
+}
+.portal-news-head h2>svg{display:none!important}
+.portal-card-copy>strong,.hero-boosted-head .eyebrow{color:#f1efff}
+.portal-card-copy>span:not(.portal-card-action){color:#aeb8d5}
+/* Keep the Yasir GIF on a single layer throughout its life, never swap on hover. */
+.portal-card--yasir .portal-card-icon{animation:none!important}
+.portal-card--yasir .portal-card-icon .portal-animated-icon{opacity:0!important;visibility:visible}
+.portal-card--yasir.persistent-sprite-loaded .portal-card-icon .portal-animated-icon.is-loaded{
+  opacity:1!important;display:block!important;
+}
+.portal-card--yasir.persistent-sprite-loaded .portal-card-icon img:not(.portal-animated-icon){
+  opacity:0!important;visibility:hidden!important;
+}
+.portal-card--yasir .portal-card-icon img{filter:none!important;animation:none!important}
+/* Boosted sprites use a stable, non-animated compositor layer; remove the prior shadow animation
+   and card-level filter (both repaint every GIF frame). The WebP rat retains all original frames. */
+.hero-boost-card,.hero-boost-card:hover{filter:none!important}
+.boost-pillar-art{animation:none!important;filter:drop-shadow(0 8px 13px rgba(0,0,0,.38))!important}
+.boost-sprite--creature{
+  image-rendering:pixelated!important;object-fit:contain!important;object-position:center!important;
+  filter:none!important;transition:none!important;backface-visibility:visible!important;
+}
+.hero-boost-card:hover .boost-sprite--creature{
+  transform:translateX(-50%)!important;filter:none!important;
+}
+.boost-pillar-stage{isolation:isolate}
+.hero-boost-card--creature:hover{transform:translateY(-3px)}
+/* No two floating toolbars may overlap on small screens. */
+@media(max-width:960px){
+  .hero-server-strip .header-stat-icon{flex-basis:30px;width:30px!important;height:30px!important}
+  .hero-server-strip .header-stat-icon svg{width:16px;height:16px}
+}
+@media(max-width:680px){
+  .social-rail{
+    right:50%!important;top:auto!important;bottom:14px!important;
+    transform:translateX(50%)!important;flex-direction:row;
+  }
+  .streams-widget.streams-widget-right{right:13px!important;bottom:90px!important}
+  .streams-widget-right .streams-toggle{min-height:44px!important}
+  .portal-news-head h2 .news-title-icon{width:26px!important;height:26px!important}
+  .header-stat{gap:7px}
+}
+@media(prefers-reduced-motion:reduce){
+  .portal-card--yasir .portal-animated-icon{display:none!important}
+  .portal-card--yasir .portal-card-icon img:not(.portal-animated-icon){visibility:visible!important;opacity:1!important}
+  .hero-boost-card,.hero-boost-card:hover{transform:none!important}
+}

@@ -97,20 +97,20 @@
       <aside class="hero-boosted" aria-label="Today's boosted creatures">
         <div class="hero-server-strip" aria-label="Live server information">
           <div class="header-status">
-            <div class="header-stat">
-              <span class="header-stat-icon" aria-hidden="true">♟</span>
+            <div class="header-stat header-stat-players">
+              <span class="header-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20v-2.1a6.5 6.5 0 0 1 13 0V20"/></svg></span>
               <span><strong>0</strong><small>Players online</small></span>
             </div>
-            <div class="header-stat">
-              <span class="header-stat-icon" aria-hidden="true">◎</span>
+            <div class="header-stat header-stat-world">
+              <span class="header-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
               <span><strong>1</strong><small>World</small></span>
             </div>
-            <div class="header-stat">
-              <span class="header-stat-icon" aria-hidden="true">◷</span>
+            <div class="header-stat header-stat-save">
+              <span class="header-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.25l3.5 2"/></svg></span>
               <span><strong>5h 54m</strong><small>Server save</small></span>
             </div>
-            <div class="header-stat header-stat-live">
-              <span class="status-dot" aria-hidden="true"></span>
+            <div class="header-stat header-stat-live is-offline">
+              <span class="header-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 9a14 14 0 0 1 17 0M7 12.5a8.2 8.2 0 0 1 10 0M11 16.5h2M4 4l16 16"/></svg></span>
               <span><strong>Offline now</strong><small>Live status</small></span>
             </div>
           </div>
@@ -118,14 +118,14 @@
 
         <div class="hero-boosted-head">
           <span class="eyebrow">Today's boosted</span>
-          <small>Daily rotation</small>
+          <small>Daily rotation <span aria-hidden="true">✦</span></small>
         </div>
 
         <div class="hero-boosted-grid">
           <article class="hero-boost-card hero-boost-card--creature">
             <div class="boost-pillar-stage">
               <img class="boost-pillar-art" src="./assets/boost-pillar.gif" alt="" aria-hidden="true">
-              <img class="boost-sprite boost-sprite--creature" src="./assets/boost-creature.gif" alt="Rat">
+              <img class="boost-sprite boost-sprite--creature" src="./assets/rat-stable.webp" alt="Rat">
             </div>
             <strong class="boost-type">Creature</strong>
             <span class="boost-real-name">Rat</span>
@@ -164,9 +164,9 @@
 
 
   <!-- Accessible floating stream directory, separated from the social rail. -->
-  <div class="streams-widget" data-ui-streams-widget>
+  <div class="streams-widget streams-widget-right" data-ui-streams-widget>
     <button type="button" data-ui-streams-toggle aria-expanded="false" aria-controls="ui-streams" aria-label="Streams" class="streams-toggle">
-      <span class="streams-toggle-icon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></svg></span>
+      <span class="streams-toggle-icon streams-twitch-icon"><svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M80,32,48,112V416h96v64h64l64-64h80L464,304V32ZM416,288l-64,64H256l-64,64V352H112V80H416Z"/><rect x="320" y="143" width="48" height="129"/><rect x="208" y="143" width="48" height="129"/></svg></span>
       <span>Streams</span>
       <span class="streams-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg></span>
     </button>
@@ -238,7 +238,7 @@
       <div class="container portal-layout">
         <article class="news-panel" aria-labelledby="news-title" data-reveal="up">
           <div class="portal-news-head">
-            <h2 id="news-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg> Latest News</h2>
+            <h2 id="news-title"><img class="news-title-icon" src="https://static.tibia.com/images/global/menu/icon-news.gif" width="32" height="32" alt="" loading="lazy" onerror="this.onerror=null;this.src='./assets/news.gif'"> Latest News</h2>
             <a href="https://ezolos.com/?subtopic=changelog">View changelog ↗</a>
           </div>
           <div class="news-panel-body">
@@ -255,7 +255,7 @@
             <span class="portal-card-icon"><img src="./assets/rankings.png" alt="" width="48" height="48" loading="lazy"></span>
             <span class="portal-card-copy"><strong>Rankings</strong><span>Highscores, leaderboards, bosses and rare discoveries.</span><span class="portal-card-action">View Rankings <span aria-hidden="true">↗</span></span></span>
           </a>
-          <a class="portal-card" href="https://ezolos.com/?subtopic=currentcharactertrades" data-reveal="up">
+          <a class="portal-card portal-card--yasir" href="https://ezolos.com/?subtopic=currentcharactertrades" data-reveal="up">
             <span class="portal-card-icon"><img src="./assets/bazaar.png" alt="" width="48" height="48" loading="lazy"></span>
             <span class="portal-card-copy"><strong>Bazaar</strong><span>Character auctions, bids and watched listings.</span><span class="portal-card-action">Open Bazaar <span aria-hidden="true">↗</span></span></span>
           </a>
