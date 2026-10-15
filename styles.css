@@ -1931,3 +1931,25 @@ h1,h2,h3,h4{font-kerning:normal}
   .portal-card--yasir .merchant-medallion{animation:none!important;translate:none!important}
   .portal-card--yasir .merchant-frame{transition:none!important}
 }
+
+/* Single animated GIF: protect Yasir from general icon crossfades and hover effects. */
+.portal-card--yasir .merchant-medallion,
+.portal-card--yasir .merchant-sprite,
+.portal-card--yasir .merchant-sprite .portal-yasir-gif {
+  animation:none!important;
+  transition:none!important;
+}
+.portal-card--yasir .merchant-sprite .portal-yasir-gif,
+.portal-card--yasir:hover .merchant-sprite .portal-yasir-gif,
+.portal-card--yasir:focus-visible .merchant-sprite .portal-yasir-gif {
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  width:64px!important;
+  height:64px!important;
+  object-fit:contain!important;
+  image-rendering:pixelated!important;
+  transform:none!important;
+  filter:none!important;
+  will-change:auto!important;
+}

@@ -128,9 +128,11 @@
       // Bazaar uses one persistent GIF sprite (with PNG only for reduced motion).
       // Never create an overlay GIF on this card: two frames repainting caused flicker.
       if(card.classList.contains("portal-card--yasir")) {
-        still.addEventListener("error",() => {
+        // One persistent GIF is managed by the HTML. Never inject another image,
+        // switch opacity on hover, or restart its animation.
+        still.addEventListener("error", () => {
           still.src = "./assets/bazaar.png";
-        },{once:true});
+        }, {once:true});
         return;
       }
       const persistent = false;
